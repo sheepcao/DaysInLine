@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class homeView;
+@class daylineView;
+
 @interface ViewController : UIViewController
+
 
 @end
