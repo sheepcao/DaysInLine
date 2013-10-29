@@ -27,8 +27,8 @@
         CGSize newSize = CGSizeMake(self.frame.size.width-85, self.frame.size.height+320);
         [self setContentSize:newSize];
         
-        self.btnInScroll = [[buttonInScroll alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 3*self.frame.size.height)];
-        [self addSubview:self.btnInScroll];
+     //   self.btnInScroll = [[buttonInScroll alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 3*self.frame.size.height)];
+     //   [self addSubview:self.btnInScroll];
 
 
         
@@ -47,6 +47,8 @@
     CGContextMoveToPoint(context, self.frame.size.width/2+18, 0);
     CGContextAddLineToPoint(context, self.frame.size.width/2+18, self.frame.size.height);
     CGContextStrokePath(context);
+    
+
     
     
     for (int i=0; i<self.frame.size.height+310;i=i+30) {

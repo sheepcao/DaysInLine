@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface buttonInScroll : UIView
-@property (nonatomic,strong) UIButton *addMoreWork ;
-@property (nonatomic,strong) UIButton *addMoreLife ;
+@property (nonatomic,strong) UIButton *oneWork ;
+@property (nonatomic,strong) UIButton *oneLife ;
 
 @end

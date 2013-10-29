@@ -26,7 +26,7 @@
 -(void)InitButtons
 {
     
-    self.addMoreWork = [[UIButton alloc] initWithFrame:CGRectMake(5+36,0, self.frame.size.width/2-10-18, self.frame.size.height)];
+  /*  self.addMoreWork = [[UIButton alloc] initWithFrame:CGRectMake(5+36,0, self.frame.size.width/2-10-18, self.frame.size.height)];
     [self.addMoreWork setTitle:@"添加事件..." forState:UIControlStateNormal];
     self.addMoreWork.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1.0];
     [self.addMoreWork setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
@@ -44,6 +44,7 @@
     
     [self addSubview:self.addMoreWork];
     [self addSubview:self.addMoreLife];
+   */
     
 }
 

@@ -37,6 +37,7 @@
     
     [my_homeView.todayButton addTarget:self action:@selector(todayTapped) forControlEvents:UIControlEventTouchUpInside];
     
+    
     CGRect rect=[[UIScreen mainScreen] bounds];
     NSLog(@"x:%f,y:%f\nwidth%f,height%f",rect.origin.x,rect.origin.y,rect.size.width,rect.size.height);
     
@@ -55,15 +56,15 @@
     self.my_dayline = [[daylineView alloc] initWithFrame:frame];
     [self.homePage addSubview:self.my_dayline];
     
-     self.my_scoller = [[dayLineScoller alloc] initWithFrame:CGRectMake(86, 85, self.view.bounds.size.width-86.4, self.view.bounds.size.height-200)];
+     self.my_scoller = [[dayLineScoller alloc] initWithFrame:CGRectMake(86,110, self.view.bounds.size.width-86.4, self.view.bounds.size.height-220)];
 
     [self.homePage addSubview:self.my_scoller];
     
     for (int i = 0; i<10; i++) {
         [[self.my_dayline.starArray objectAtIndex:i] addTarget:self action:@selector(starTapped:) forControlEvents:UIControlEventTouchUpInside];
     }
-    [self.my_scoller.btnInScroll.addMoreLife addTarget:self action:@selector(eventTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [self.my_scoller.btnInScroll.addMoreWork addTarget:self action:@selector(eventTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.my_dayline.addMoreLife addTarget:self action:@selector(eventTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.my_dayline.addMoreWork addTarget:self action:@selector(eventTapped:) forControlEvents:UIControlEventTouchUpInside];
     
     
 }
