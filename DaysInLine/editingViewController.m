@@ -7,9 +7,13 @@
 //
 
 #import "editingViewController.h"
+#import "globalVars.h"
 
 @interface editingViewController ()<UIActionSheetDelegate>
 @property (weak, nonatomic) UILabel *startLabel;
+@property (weak, nonatomic) UILabel *endLabel;
+
+
 
 @end
 
@@ -27,25 +31,91 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+   
 	// Do any additional setup after loading the view.
     [self.startTimeButton addTarget:self action:@selector(startTimeTapped) forControlEvents:UIControlEventTouchUpInside];
-
+    [self.endTimeButton addTarget:self action:@selector(endTimeTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.saveButton addTarget:self action:@selector(saveTapped) forControlEvents:UIControlEventTouchUpInside];
+    
     self.startTimeButton.layer.borderWidth = 3.5;
     self.startTimeButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.endTimeButton.layer.borderWidth = 3.5;
+    self.endTimeButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]   initWithTarget:self action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tap];
+
 }
 
+//tag＝1的actionsheet
 -(void)startTimeTapped
 {
     NSString *title = UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation) ? @"\n\n\n\n\n\n\n\n\n" : @"\n\n\n\n\n\n\n\n\n\n\n" ;
     
 	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:title delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:@"确定", nil];
+    actionSheet.tag = 1;
 	[actionSheet showInView:self.view];
     
 	UIDatePicker *datePicker = [[UIDatePicker alloc] init] ;
 	datePicker.tag = 101;
 	datePicker.datePickerMode = UIDatePickerModeTime;
+
+    
+    [actionSheet addSubview:datePicker];
+}
+
+
+//tag＝2的actionsheet
+-(void)endTimeTapped
+{
+    NSString *title = UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation) ? @"\n\n\n\n\n\n\n\n\n" : @"\n\n\n\n\n\n\n\n\n\n\n" ;
+    
+	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:title delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:@"确定", nil];
+    actionSheet.tag = 2;
+	[actionSheet showInView:self.view];
+    
+	UIDatePicker *datePicker = [[UIDatePicker alloc] init] ;
+	datePicker.tag = 102;
+	datePicker.datePickerMode = UIDatePickerModeTime;
+    
 	[actionSheet addSubview:datePicker];
 }
+
+
+-(void)saveTapped
+{
+    if (!self.startLabel.text) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                        message:@"请输入事件起始时间"
+                                                       delegate:self
+                                              cancelButtonTitle:@"确定"
+                                              otherButtonTitles:nil];
+        [alert show];
+
+    }
+    else if (self.endLabel.text) {
+        NSArray *startTime = [self.startLabel.text componentsSeparatedByString:@":"];
+        NSArray *endTime = [self.endLabel.text componentsSeparatedByString:@":"];
+
+        double hour_0 = [startTime[0] doubleValue];
+        double minite_0 = [startTime[1] doubleValue];
+        double hour_1 = [endTime[0] doubleValue];
+        double minite_1 = [endTime[1] doubleValue];
+        
+        double startNum = hour_0*60 + minite_0;
+        double endNum = hour_1*60 + minite_1;
+        
+        NSNumber *startTimeNum = [[NSNumber alloc] initWithDouble:(startNum-360.00)];
+        NSNumber *endTimeNum = [[NSNumber alloc] initWithDouble:(endNum-360.00)];
+        
+        NSLog(@"之前：%@",startTimeNum);
+        [self.delegate redrawButton:startTimeNum:endTimeNum];
+
+        [self dismissViewControllerAnimated:YES completion:nil];
+        
+    }
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -56,28 +126,62 @@
 #pragma actionSheet Delegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    if (actionSheet.tag == 1) {
+        
+    
 	UIDatePicker *datePicker = (UIDatePicker *)[actionSheet viewWithTag:101];
 	NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
-	
-		
     formatter.dateFormat = @"H:mm";
     NSString *timestart = [formatter stringFromDate:datePicker.date];
     self.startLabel = (UILabel *)[self.view viewWithTag:103];
 	[(UILabel *)[self.view viewWithTag:103] setText:timestart];
     [self.startTimeButton setTitle:@"" forState:UIControlStateNormal];
-    NSLog(@"%@\n",self.startLabel.text);
-    NSLog(@"%@",timestart);
+   
     NSArray *startTime = [timestart componentsSeparatedByString:@":"];
     int hour = [startTime[0] intValue];
     int minite = [startTime[1] intValue];
     NSLog(@"hour:%d,minite:%d",hour,minite);
 
-    NSString *s = [NSString stringWithFormat:@"%i",minite];
-    NSLog(@"%@",s);
     
+    }
     
- 
+    if (actionSheet.tag == 2) {
+        
+        
+        UIDatePicker *datePicker = (UIDatePicker *)[actionSheet viewWithTag:102];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
+        formatter.dateFormat = @"H:mm";
+        NSString *timestart = [formatter stringFromDate:datePicker.date];
+    
+        self.endLabel = (UILabel *)[self.view viewWithTag:104];
+        [(UILabel *)[self.view viewWithTag:104] setText:timestart];
+        [self.endTimeButton setTitle:@"" forState:UIControlStateNormal];
+        
+        NSArray *startTime = [timestart componentsSeparatedByString:@":"];
+        int hour = [startTime[0] intValue];
+        int minite = [startTime[1] intValue];
+        NSLog(@"hour:%d,minite:%d",hour,minite);
+        
+        
+    }
+
+    
 	
 }
 
+- (IBAction)endEditing:(id)sender {
+    [self resignFirstResponder];
+}
+
+-(void)dismissKeyboard {
+    NSArray *subviews = [self.view subviews];
+    for (id objInput in subviews) {
+        if ([objInput isKindOfClass:[UITextField class]]||[objInput isKindOfClass:[UITextView class]]) {
+            UITextField *theTextField = objInput;
+            if ([objInput isFirstResponder]) {
+                [theTextField resignFirstResponder];
+            }
+        }
+    }
+}
 @end

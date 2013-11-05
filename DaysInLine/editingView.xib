@@ -12,12 +12,14 @@
                 <outlet property="addTagButton" destination="0WL-AF-KdO" id="Txc-OR-WdI"/>
                 <outlet property="deleteButton" destination="PTi-KT-iw5" id="vCh-e2-dra"/>
                 <outlet property="endTimeButton" destination="4ua-p1-azQ" id="2ZB-JT-rMq"/>
+                <outlet property="mainText" destination="ZEV-5t-kIE" id="qMw-aS-WwA"/>
                 <outlet property="moneyButton" destination="ak2-GO-nui" id="U2x-QY-Kjo"/>
                 <outlet property="photoButton" destination="uUl-Hg-KmG" id="t57-wG-p8d"/>
                 <outlet property="remindButton" destination="9ST-zX-g5s" id="njA-7x-4Hd"/>
                 <outlet property="saveButton" destination="ksZ-1h-47g" id="jom-95-JT7"/>
                 <outlet property="shareButton" destination="tpe-fm-0n4" id="fFd-XV-x1O"/>
                 <outlet property="startTimeButton" destination="d6A-NF-qtA" id="GtI-I2-9Yp"/>
+                <outlet property="theme" destination="jnF-cr-2Iy" id="fae-kh-1ia"/>
                 <outlet property="view" destination="d0u-Lm-SJW" id="epj-6M-45z"/>
             </connections>
         </placeholder>
@@ -126,6 +128,29 @@
                     <rect key="frame" x="185" y="59" width="91" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" keyboardDismissMode="onDrag" text="点击输入... ..." translatesAutoresizingMaskIntoConstraints="NO" id="ZEV-5t-kIE">
+                    <rect key="frame" x="40" y="126" width="240" height="255"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.93899473852040816" green="0.93899473852040816" blue="0.93899473852040816" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardAppearance="alert"/>
+                </textView>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jnF-cr-2Iy">
+                    <rect key="frame" x="88" y="88" width="188" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <action selector="endEditing:" destination="-1" eventType="editingDidEndOnExit" id="qY5-ha-s4v"/>
+                    </connections>
+                </textField>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="主题" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zxP-Np-Ufk">
+                    <rect key="frame" x="43" y="92" width="34" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>

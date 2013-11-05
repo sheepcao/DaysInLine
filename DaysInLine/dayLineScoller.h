@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "redrawButtonDelegate.h"
 @class buttonInScroll;
-@interface dayLineScoller : UIScrollView
+@interface dayLineScoller : UIScrollView<redrawButtonDelegate>
 
 @property (nonatomic,strong) buttonInScroll *btnInScroll;
 

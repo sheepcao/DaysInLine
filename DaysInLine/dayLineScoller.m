@@ -9,6 +9,7 @@
 #import "dayLineScoller.h"
 #import "buttonInScroll.h"
 
+
 @interface dayLineScoller ()
 
 
@@ -16,15 +17,17 @@
 @end
 
 @implementation dayLineScoller
-
+int contentLongth;
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         
+        
         self.backgroundColor = [UIColor whiteColor];
         CGSize newSize = CGSizeMake(self.frame.size.width-85, self.frame.size.height+320);
+        contentLongth = self.frame.size.height+320;
         [self setContentSize:newSize];
         
      //   self.btnInScroll = [[buttonInScroll alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 3*self.frame.size.height)];
@@ -74,13 +77,45 @@
     
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+#pragma redrawButton delegate
+
+-(void)redrawButton:(NSNumber *)startNum :(NSNumber *)endNum
 {
-    // Drawing code
+    
+    NSLog(@"redraw");
+    double start = ([startNum doubleValue]/1080)*contentLongth;
+    double end = ([endNum doubleValue]/1080)*contentLongth;
+    double height = end - start;
+    if (height<15.6) {
+        height=15.6;
+    }
+    
+    NSLog(@"start:%f,height:%f,longth:%d",start,end-start,contentLongth);
+  /*
+    UIButton *eventButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [eventButton setFrame:CGRectMake(40, start, self.frame.size.width/2-28, height)];
+    
+    [eventButton setTitle:@"hello world" forState:UIControlStateNormal];
+    [eventButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    eventButton.titleLabel.font = [UIFont systemFontOfSize:12.0];
+   */
+ 
+    UIButton *eventButton = [[UIButton alloc] initWithFrame:CGRectMake(40, start, self.frame.size.width/2-28, height)];
+    // 设置圆角半径
+    eventButton.layer.masksToBounds = YES;
+    eventButton.layer.cornerRadius = 1.0;
+    
+    eventButton.backgroundColor = [UIColor clearColor];
+    eventButton.layer.borderWidth = 1.0;
+    
+    [eventButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    eventButton.titleLabel.font = [UIFont systemFontOfSize:12.0];
+    
+    eventButton.layer.borderColor = [UIColor blackColor].CGColor;
+    [eventButton setTitle:@"hello world!" forState:UIControlStateNormal];
+  
+    [self addSubview:eventButton];
+     NSLog(@"redraw000");
 }
-*/
 
 @end

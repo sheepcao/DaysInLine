@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "redrawButtonDelegate.h"
 
-@interface buttonInScroll : UIView
+@interface buttonInScroll : UIView <redrawButtonDelegate>
 @property (nonatomic,strong) UIButton *oneWork ;
 @property (nonatomic,strong) UIButton *oneLife ;
 

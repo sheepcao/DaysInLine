@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "redrawButtonDelegate.h"
 
 @class homeView;
 @class daylineView;
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController 
 
 
 @end

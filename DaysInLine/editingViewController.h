@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "redrawButtonDelegate.h"
+
 
 @interface editingViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIButton *addTagButton;
@@ -21,5 +23,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *startTimeButton;
 @property (weak, nonatomic) IBOutlet UIButton *endTimeButton;
 
+@property (weak, nonatomic) IBOutlet UITextView *mainText;
+@property (weak, nonatomic) IBOutlet UITextField *theme;
+
+@property (weak, nonatomic) NSObject <redrawButtonDelegate> *delegate;
+- (IBAction)endEditing:(id)sender;
 
 @end

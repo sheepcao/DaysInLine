@@ -12,6 +12,7 @@
 #import "dayLineScoller.h"
 #import "buttonInScroll.h"
 #import "editingViewController.h"
+#import "globalVars.h"
 
 
 @interface ViewController ()
@@ -52,11 +53,17 @@
 
 -(void)todayTapped
 {
+    for (int i=0; i<18; i++) {
+        area[i] = 10;
+    }
+    
     CGRect frame = CGRectMake(85,0, self.view.bounds.size.width-85, self.view.bounds.size.height );
     self.my_dayline = [[daylineView alloc] initWithFrame:frame];
     [self.homePage addSubview:self.my_dayline];
     
      self.my_scoller = [[dayLineScoller alloc] initWithFrame:CGRectMake(86,110, self.view.bounds.size.width-86.4, self.view.bounds.size.height-220)];
+    
+    
 
     [self.homePage addSubview:self.my_scoller];
     
@@ -95,8 +102,12 @@
 -(void)eventTapped:(UIButton *)sender
 {
    editingViewController *my_editingViewController = [[editingViewController alloc] initWithNibName:@"editingView" bundle:nil];
+    my_editingViewController.delegate = self.my_scoller;
     
+    [self setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
     [self presentViewController:my_editingViewController animated:YES completion:Nil ];
+    
+    
 
     
 }
