@@ -10,7 +10,11 @@
 #import "redrawButtonDelegate.h"
 
 
-@interface editingViewController : UIViewController
+@interface editingViewController : UIViewController{
+    NSNumber *startTimeNum;
+    NSNumber *endTimeNum;
+    
+}
 @property (weak, nonatomic) IBOutlet UIButton *addTagButton;
 @property (weak, nonatomic) IBOutlet UIButton *remindButton;
 @property (weak, nonatomic) IBOutlet UIButton *photoButton;

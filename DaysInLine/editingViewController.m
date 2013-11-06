@@ -19,6 +19,7 @@
 
 @implementation editingViewController
 
+bool flag;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -31,6 +32,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
    
 	// Do any additional setup after loading the view.
     [self.startTimeButton addTarget:self action:@selector(startTimeTapped) forControlEvents:UIControlEventTouchUpInside];
@@ -84,16 +86,17 @@
 
 -(void)saveTapped
 {
-    if (!self.startLabel.text) {
+    flag=NO;
+    if (!(self.startLabel.text) || !(self.endLabel.text)) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
-                                                        message:@"请输入事件起始时间"
+                                                        message:@"请输入事件起始和结束时间"
                                                        delegate:self
                                               cancelButtonTitle:@"确定"
                                               otherButtonTitles:nil];
         [alert show];
 
     }
-    else if (self.endLabel.text) {
+    else  {
         NSArray *startTime = [self.startLabel.text componentsSeparatedByString:@":"];
         NSArray *endTime = [self.endLabel.text componentsSeparatedByString:@":"];
 
@@ -105,13 +108,36 @@
         double startNum = hour_0*60 + minite_0;
         double endNum = hour_1*60 + minite_1;
         
-        NSNumber *startTimeNum = [[NSNumber alloc] initWithDouble:(startNum-360.00)];
-        NSNumber *endTimeNum = [[NSNumber alloc] initWithDouble:(endNum-360.00)];
+        startTimeNum = [[NSNumber alloc] initWithDouble:(startNum-360.00)];
+        endTimeNum = [[NSNumber alloc] initWithDouble:(endNum-360.00)];
         
-        NSLog(@"之前：%@",startTimeNum);
-        [self.delegate redrawButton:startTimeNum:endTimeNum];
+        for (int i = [startTimeNum intValue]/30; i < [endTimeNum intValue]/30; i++) {
+            if(area[i] == 1)
+            {
+                flag=YES;
+                break;
+            }
+        }
+        
+        if (flag) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                            message:@"该时段已有事件存在，请修改起止时间或选择相应事件进行补充"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"确定"
+                                                  otherButtonTitles:nil];
+            [alert show];
 
-        [self dismissViewControllerAnimated:YES completion:nil];
+        }
+        else{
+
+            [self.delegate redrawButton:startTimeNum:endTimeNum:self.theme.text];
+            
+            for (int i = [startTimeNum intValue]/30; i < [endTimeNum intValue]/30; i++) {
+            area[i] = 1;
+            }
+        
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
         
     }
 }
@@ -136,13 +162,12 @@
     self.startLabel = (UILabel *)[self.view viewWithTag:103];
 	[(UILabel *)[self.view viewWithTag:103] setText:timestart];
     [self.startTimeButton setTitle:@"" forState:UIControlStateNormal];
-   
-    NSArray *startTime = [timestart componentsSeparatedByString:@":"];
-    int hour = [startTime[0] intValue];
-    int minite = [startTime[1] intValue];
-    NSLog(@"hour:%d,minite:%d",hour,minite);
-
-    
+        
+    NSArray *startTime = [self.startLabel.text componentsSeparatedByString:@":"];
+    double hour_0 = [startTime[0] doubleValue];
+    double minite_0 = [startTime[1] doubleValue];
+    double startNum = hour_0*60 + minite_0;
+    startTimeNum = [[NSNumber alloc] initWithDouble:(startNum-360.00)];
     }
     
     if (actionSheet.tag == 2) {
@@ -157,10 +182,33 @@
         [(UILabel *)[self.view viewWithTag:104] setText:timestart];
         [self.endTimeButton setTitle:@"" forState:UIControlStateNormal];
         
+        NSArray *endTime = [self.endLabel.text componentsSeparatedByString:@":"];
+        
+        
+        double hour_1 = [endTime[0] doubleValue];
+        double minite_1 = [endTime[1] doubleValue];
+        double endNum = hour_1*60 + minite_1;
+
+        endTimeNum = [[NSNumber alloc] initWithDouble:(endNum-360.00)];
+        if (self.startLabel.text) {
+            if ([endTimeNum doubleValue]<[startTimeNum doubleValue]) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                                message:@"结束时间应该比开始时间更大哦！"
+                                                               delegate:self
+                                                      cancelButtonTitle:@"确定"
+                                                      otherButtonTitles:nil];
+                [alert show];
+            }
+        }
+        
+        
+ /*
         NSArray *startTime = [timestart componentsSeparatedByString:@":"];
         int hour = [startTime[0] intValue];
         int minite = [startTime[1] intValue];
         NSLog(@"hour:%d,minite:%d",hour,minite);
+*/
+        
         
         
     }

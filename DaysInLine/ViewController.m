@@ -54,7 +54,7 @@
 -(void)todayTapped
 {
     for (int i=0; i<18; i++) {
-        area[i] = 10;
+        area[i] = 0;
     }
     
     CGRect frame = CGRectMake(85,0, self.view.bounds.size.width-85, self.view.bounds.size.height );

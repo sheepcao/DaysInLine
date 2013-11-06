@@ -12,6 +12,6 @@
 
 
 @optional
--(void)redrawButton:(NSNumber *)startNum :(NSNumber *)endNum;
+-(void)redrawButton:(NSNumber *)startNum :(NSNumber *)endNum :(NSString *)title;
 
 @end

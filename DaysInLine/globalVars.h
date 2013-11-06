@@ -9,6 +9,6 @@
 #ifndef DaysInLine_globalVars_h
 #define DaysInLine_globalVars_h
 
-int area[18] ;
+int area[32] ;
 
 #endif

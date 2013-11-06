@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0B6FD3841827E93C008DC1A0 /* drawButtonDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6FD3831827E93C008DC1A0 /* drawButtonDate.m */; };
 		0B916CFA1816B43300B3F41D /* editingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B916CF91816B43300B3F41D /* editingView.xib */; };
 		0B916CFD1816BB2200B3F41D /* editingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B916CFC1816BB2200B3F41D /* editingViewController.m */; };
 		0B916CFF1816C1E600B3F41D /* editView.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B916CFE1816C1E600B3F41D /* editView.png */; };
@@ -47,8 +46,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0B6FD3821827E93C008DC1A0 /* drawButtonDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = drawButtonDate.h; sourceTree = "<group>"; };
-		0B6FD3831827E93C008DC1A0 /* drawButtonDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = drawButtonDate.m; sourceTree = "<group>"; };
 		0B916CF91816B43300B3F41D /* editingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = editingView.xib; sourceTree = "<group>"; };
 		0B916CFB1816BB2200B3F41D /* editingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = editingViewController.h; sourceTree = "<group>"; };
 		0B916CFC1816BB2200B3F41D /* editingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = editingViewController.m; sourceTree = "<group>"; };
@@ -223,8 +220,6 @@
 		0BD700881813AC26004FCBE2 /* data */ = {
 			isa = PBXGroup;
 			children = (
-				0B6FD3821827E93C008DC1A0 /* drawButtonDate.h */,
-				0B6FD3831827E93C008DC1A0 /* drawButtonDate.m */,
 				0BB629D31829233B00D9B859 /* redrawButtonDelegate.h */,
 				0BB629D418293F3C00D9B859 /* globalVars.h */,
 			);
@@ -341,7 +336,6 @@
 				0B9A53DF1812274D0085FFD7 /* AppDelegate.m in Sources */,
 				0B9A53DB1812274D0085FFD7 /* main.m in Sources */,
 				0B916CFD1816BB2200B3F41D /* editingViewController.m in Sources */,
-				0B6FD3841827E93C008DC1A0 /* drawButtonDate.m in Sources */,
 				0BD7008B1813BC66004FCBE2 /* daylineView.m in Sources */,
 				0BD7008E1814242D004FCBE2 /* dayLineScoller.m in Sources */,
 			);

@@ -79,7 +79,7 @@ int contentLongth;
 
 #pragma redrawButton delegate
 
--(void)redrawButton:(NSNumber *)startNum :(NSNumber *)endNum
+-(void)redrawButton:(NSNumber *)startNum :(NSNumber *)endNum :(NSString *)title
 {
     
     NSLog(@"redraw");
@@ -112,10 +112,23 @@ int contentLongth;
     eventButton.titleLabel.font = [UIFont systemFontOfSize:12.0];
     
     eventButton.layer.borderColor = [UIColor blackColor].CGColor;
-    [eventButton setTitle:@"hello world!" forState:UIControlStateNormal];
+    [eventButton setTitle:title forState:UIControlStateNormal];
+    
+    [eventButton addTarget:self action:@selector(eventModify:) forControlEvents:UIControlEventTouchUpInside];
   
     [self addSubview:eventButton];
      NSLog(@"redraw000");
+}
+
+-(void)eventModify:(UIButton *)sender
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                    message:@"该时段已有事件存在，请修改起止时间或选择相应事件进行补充"
+                                                   delegate:self
+                                          cancelButtonTitle:@"确定"
+                                          otherButtonTitles:nil];
+    [alert show];
+    
 }
 
 @end
