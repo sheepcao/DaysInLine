@@ -16,8 +16,8 @@
                 <outlet property="moneyButton" destination="ak2-GO-nui" id="U2x-QY-Kjo"/>
                 <outlet property="photoButton" destination="uUl-Hg-KmG" id="t57-wG-p8d"/>
                 <outlet property="remindButton" destination="9ST-zX-g5s" id="njA-7x-4Hd"/>
+                <outlet property="returnButton" destination="tpe-fm-0n4" id="xkZ-i9-QIW"/>
                 <outlet property="saveButton" destination="ksZ-1h-47g" id="jom-95-JT7"/>
-                <outlet property="shareButton" destination="tpe-fm-0n4" id="fFd-XV-x1O"/>
                 <outlet property="startTimeButton" destination="d6A-NF-qtA" id="GtI-I2-9Yp"/>
                 <outlet property="theme" destination="jnF-cr-2Iy" id="fae-kh-1ia"/>
                 <outlet property="view" destination="d0u-Lm-SJW" id="epj-6M-45z"/>
@@ -29,7 +29,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="editView.png" translatesAutoresizingMaskIntoConstraints="NO" id="adU-64-2xG">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
+                    <rect key="frame" x="0.0" y="0.0" width="322" height="460"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 </imageView>
                 <button opaque="NO" tag="2005" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ksZ-1h-47g">
@@ -91,7 +91,7 @@
                 <button opaque="NO" tag="2001" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tpe-fm-0n4">
                     <rect key="frame" x="12" y="422" width="40" height="35"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="分享">
+                    <state key="normal" title="返回">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>

@@ -8,6 +8,7 @@
 
 #import "dayLineScoller.h"
 #import "buttonInScroll.h"
+#import "ViewController.h"
 
 
 @interface dayLineScoller ()
@@ -63,7 +64,7 @@ int contentLongth;
         buttonWorks1.layer.borderColor = [UIColor blackColor].CGColor;
         [buttonWorks1 setTitle:@"11111" forState:UIControlStateNormal];
 */
-        UILabel *labelTime = [[UILabel alloc] initWithFrame:CGRectMake(0, i, 36, 20)];
+        UILabel *labelTime = [[UILabel alloc] initWithFrame:CGRectMake(0, i, 40, 20)];
         NSString *time = [NSString stringWithFormat:@"%d:00",t];
         t++;
         labelTime.font = [UIFont systemFontOfSize:14.0];
@@ -100,7 +101,7 @@ int contentLongth;
     eventButton.titleLabel.font = [UIFont systemFontOfSize:12.0];
    */
  
-    UIButton *eventButton = [[UIButton alloc] initWithFrame:CGRectMake(40, start, self.frame.size.width/2-28, height)];
+    UIButton *eventButton = [[UIButton alloc] initWithFrame:CGRectMake(40, start, self.frame.size.width/2-32, height)];
     // 设置圆角半径
     eventButton.layer.masksToBounds = YES;
     eventButton.layer.cornerRadius = 1.0;
@@ -122,12 +123,11 @@ int contentLongth;
 
 -(void)eventModify:(UIButton *)sender
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
-                                                    message:@"该时段已有事件存在，请修改起止时间或选择相应事件进行补充"
-                                                   delegate:self
-                                          cancelButtonTitle:@"确定"
-                                          otherButtonTitles:nil];
-    [alert show];
+    
+
+    [self.my_delegate modifyEvent];
+    
+    
     
 }
 

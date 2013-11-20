@@ -10,7 +10,7 @@
 #import "redrawButtonDelegate.h"
 
 
-@interface editingViewController : UIViewController{
+@interface editingViewController : UIViewController {
     NSNumber *startTimeNum;
     NSNumber *endTimeNum;
     
@@ -19,13 +19,14 @@
 @property (weak, nonatomic) IBOutlet UIButton *remindButton;
 @property (weak, nonatomic) IBOutlet UIButton *photoButton;
 @property (weak, nonatomic) IBOutlet UIButton *moneyButton;
-@property (weak, nonatomic) IBOutlet UIButton *shareButton;
+
 @property (weak, nonatomic) IBOutlet UIButton *addAchieveButton;
 @property (weak, nonatomic) IBOutlet UIButton *addCollectionButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
 @property (weak, nonatomic) IBOutlet UIButton *startTimeButton;
 @property (weak, nonatomic) IBOutlet UIButton *endTimeButton;
+@property (weak, nonatomic) IBOutlet UIButton *returnButton;
 
 @property (weak, nonatomic) IBOutlet UITextView *mainText;
 @property (weak, nonatomic) IBOutlet UITextField *theme;

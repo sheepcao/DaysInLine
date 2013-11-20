@@ -7,12 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "sqlite3.h"
 #import "redrawButtonDelegate.h"
 
 @class homeView;
 @class daylineView;
 
-@interface ViewController : UIViewController 
-
-
+@interface ViewController : UIViewController <redrawButtonDelegate>
+{
+    sqlite3 *dataBase;
+    NSString *databasePath;
+    NSString *modifyDate;
+}
 @end

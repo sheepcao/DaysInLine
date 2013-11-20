@@ -38,6 +38,7 @@ bool flag;
     [self.startTimeButton addTarget:self action:@selector(startTimeTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.endTimeButton addTarget:self action:@selector(endTimeTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.saveButton addTarget:self action:@selector(saveTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.returnButton addTarget:self action:@selector(returnTapped) forControlEvents:UIControlEventTouchUpInside];
     
     self.startTimeButton.layer.borderWidth = 3.5;
     self.startTimeButton.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -132,7 +133,7 @@ bool flag;
 
             [self.delegate redrawButton:startTimeNum:endTimeNum:self.theme.text];
             
-            for (int i = [startTimeNum intValue]/30; i < [endTimeNum intValue]/30; i++) {
+            for (int i = [startTimeNum intValue]/30; i <= [endTimeNum intValue]/30; i++) {
             area[i] = 1;
             }
         
@@ -142,6 +143,12 @@ bool flag;
     }
 }
 
+
+-(void)returnTapped
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+}
 
 - (void)didReceiveMemoryWarning
 {
