@@ -80,7 +80,7 @@ int contentLongth;
 
 #pragma redrawButton delegate
 
--(void)redrawButton:(NSNumber *)startNum :(NSNumber *)endNum :(NSString *)title
+-(void)redrawButton:(NSNumber *)startNum :(NSNumber *)endNum :(NSString *)title :(NSNumber *)eventType
 {
     
     NSLog(@"redraw");
@@ -101,7 +101,15 @@ int contentLongth;
     eventButton.titleLabel.font = [UIFont systemFontOfSize:12.0];
    */
  
-    UIButton *eventButton = [[UIButton alloc] initWithFrame:CGRectMake(40, start, self.frame.size.width/2-32, height)];
+    NSLog(@"in draw the typ is : %@",eventType);
+    UIButton *eventButton;
+    if ([eventType intValue] == 1) {
+         eventButton = [[UIButton alloc] initWithFrame:CGRectMake(40, start, self.frame.size.width/2-32, height)];
+    }
+    else if ([eventType intValue] == 2) {
+        eventButton = [[UIButton alloc] initWithFrame:CGRectMake(self.frame.size.width/2+25, start, self.frame.size.width/2-32, height)];
+    }
+   
     // 设置圆角半径
     eventButton.layer.masksToBounds = YES;
     eventButton.layer.cornerRadius = 1.0;

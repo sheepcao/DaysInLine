@@ -33,7 +33,7 @@ bool flag;
 {
     [super viewDidLoad];
     
-   
+
 	// Do any additional setup after loading the view.
     [self.startTimeButton addTarget:self action:@selector(startTimeTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.endTimeButton addTarget:self action:@selector(endTimeTapped) forControlEvents:UIControlEventTouchUpInside];
@@ -44,6 +44,8 @@ bool flag;
     self.startTimeButton.layer.borderColor = [UIColor whiteColor].CGColor;
     self.endTimeButton.layer.borderWidth = 3.5;
     self.endTimeButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    
+    NSLog(@"type is:%@ ~~~~~",self.eventType);
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]   initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
@@ -131,7 +133,7 @@ bool flag;
         }
         else{
 
-            [self.delegate redrawButton:startTimeNum:endTimeNum:self.theme.text];
+            [self.delegate redrawButton:startTimeNum:endTimeNum:self.theme.text:self.eventType];
             
             for (int i = [startTimeNum intValue]/30; i <= [endTimeNum intValue]/30; i++) {
             area[i] = 1;

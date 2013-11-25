@@ -57,8 +57,13 @@
         if (sqlite3_open(dbpath, &dataBase)==SQLITE_OK) {
  /*           NSString *createsql = @"CREATE TABLE IF NOT EXISTS DAYTABLE (ID INTEGER PRIMARY KEY AUTOINCREMENT,DATE TEXT UNIQUE,MOOD INTEGER,GROWTH INTEGER)";
  */
-            NSString *createsql = @"CREATE TABLE IF NOT EXISTS DAYTABLE (DATE TEXT PRIMARY KEY,MOOD INTEGER,GROWTH INTEGER)";
-            [self execSql:createsql];
+            NSString *createDayable = @"CREATE TABLE IF NOT EXISTS DAYTABLE (DATE TEXT PRIMARY KEY,MOOD INTEGER,GROWTH INTEGER)";
+            NSString *createEvent = @"CREATE TABLE IF NOT EXISTS EVENT (eventID INTEGER PRIMARY KEY AUTOINCREMENT,TYPE INTEGER,TITLE TEXT,mainText TEXT,income REAL,expend REAL,date TEXT,startTime TEXT,endTime TEXT,distance TEXT,label TEXT,remind INTEGER,startArea INTEGER,photoDir TEXT)";
+            NSString *createRemind = @"CREATE TABLE IF NOT EXISTS REMIND (remindID INTEGER PRIMARY KEY AUTOINCREMENT,eventID INTEGER,date TEXT,fromToday TEXT,time TEXT)";
+
+            [self execSql:createDayable];
+            [self execSql:createEvent];
+            [self execSql:createRemind];
         }
         else {
             NSLog(@"数据库打开失败");
@@ -274,6 +279,8 @@
 -(void)eventTapped:(UIButton *)sender
 {
    editingViewController *my_editingViewController = [[editingViewController alloc] initWithNibName:@"editingView" bundle:nil];
+    my_editingViewController.eventType = [NSNumber numberWithInt:sender.tag];
+    NSLog(@"type is:%@",my_editingViewController.eventType);
     my_editingViewController.delegate = self.my_scoller;
 
     

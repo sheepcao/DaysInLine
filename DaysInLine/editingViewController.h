@@ -11,6 +11,7 @@
 
 
 @interface editingViewController : UIViewController {
+    NSNumber *eventType;
     NSNumber *startTimeNum;
     NSNumber *endTimeNum;
     
@@ -30,6 +31,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextView *mainText;
 @property (weak, nonatomic) IBOutlet UITextField *theme;
+@property (weak, nonatomic) IBOutlet NSNumber *eventType;
 
 @property (weak, nonatomic) NSObject <redrawButtonDelegate> *delegate;
 - (IBAction)endEditing:(id)sender;
