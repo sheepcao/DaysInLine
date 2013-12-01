@@ -13,6 +13,6 @@
 
 @optional
 -(void)redrawButton:(NSNumber *)startNum :(NSNumber *)endNum :(NSString *)title :(NSNumber *)eventType;
--(void)modifyEvent:(NSNumber *)startArea;
+-(void)modifyEvent;
 
 @end
