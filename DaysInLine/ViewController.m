@@ -36,7 +36,13 @@
     [self.view addSubview:my_homeView];
     self.homePage = my_homeView;
     [my_homeView.todayButton addTarget:self action:@selector(todayTapped) forControlEvents:UIControlEventTouchUpInside];
- 
+    
+    //初始化全局数据
+    for (int i=0; i<18; i++) {
+        workArea[i] = 0;
+        lifeArea[i] = 0;
+    }
+    modifying = 0;
 
     
     
@@ -90,9 +96,7 @@
 
 -(void)todayTapped
 {
-    for (int i=0; i<18; i++) {
-        area[i] = 0;
-    }
+
     
     CGRect frame = CGRectMake(85,0, self.view.bounds.size.width-85, self.view.bounds.size.height );
     self.my_dayline = [[daylineView alloc] initWithFrame:frame];
@@ -100,7 +104,8 @@
     
      self.my_scoller = [[dayLineScoller alloc] initWithFrame:CGRectMake(86,110, self.view.bounds.size.width-86.4, self.view.bounds.size.height-220)];
     
-    self.my_scoller.my_delegate = self;
+    self.my_scoller.modifyEvent_delegate = self;
+    self.drawBtnDelegate = self.my_scoller;
     
 
     [self.homePage addSubview:self.my_scoller];
@@ -125,9 +130,9 @@
     //查看当天是否已经有数据
     
     if (sqlite3_open(dbpath, &dataBase)==SQLITE_OK) {
-        NSString *querySQL = [NSString stringWithFormat:@"SELECT mood,growth from DAYTABLE where DATE=\"%@\"",modifyDate];
-        const char *querystatement = [querySQL UTF8String];
-        if (sqlite3_prepare_v2(dataBase, querystatement, -1, &statement, NULL)==SQLITE_OK) {
+        NSString *queryStar = [NSString stringWithFormat:@"SELECT mood,growth from DAYTABLE where DATE=\"%@\"",modifyDate];
+        const char *queryStarstatement = [queryStar UTF8String];
+        if (sqlite3_prepare_v2(dataBase, queryStarstatement, -1, &statement, NULL)==SQLITE_OK) {
             if (sqlite3_step(statement)==SQLITE_ROW) {
                 //当天数据已经存在，则取出数据还原界面
                 int moodNum = sqlite3_column_int(statement, 0);
@@ -169,50 +174,57 @@
 
         }
         sqlite3_finalize(statement);
+        
+        NSString *queryEventButton = [NSString stringWithFormat:@"SELECT type,title,startTime,endTime from event where DATE=\"%@\"",modifyDate];
+        const char *queryEventstatement = [queryEventButton UTF8String];
+        if (sqlite3_prepare_v2(dataBase, queryEventstatement, -1, &statement, NULL)==SQLITE_OK) {
+            while (sqlite3_step(statement)==SQLITE_ROW) {
+                //当天已有事件存在，则取出数据还原界面
+                NSString *title;
+                NSNumber *evtType = [[NSNumber alloc] initWithInt:sqlite3_column_int(statement, 0)];
+                char *ttl = (char *)sqlite3_column_text(statement, 1);
+                NSLog(@"char is %s",ttl);
+                if (ttl == nil) {
+                    title = @"";
+                }else {
+                    title = [[NSString alloc] initWithUTF8String:ttl];
+                    NSLog(@"nsstring  is %@",title);
+                }
+                NSNumber *startTm = [[NSNumber alloc] initWithDouble:sqlite3_column_double(statement,2)];
+                NSNumber *endTm = [[NSNumber alloc] initWithDouble:sqlite3_column_double(statement,3)];
+                
+                [self.drawBtnDelegate redrawButton:startTm :endTm :title :evtType];
+                
+                if ([evtType intValue]==0) {
+                    for (int i = [startTm intValue]/30; i <= [endTm intValue]/30; i++) {
+                        workArea[i] = 1;
+                        NSLog(@"seized work area is :%d",i);
+                    }
+                }else if([evtType intValue]==1){
+                    for (int i = [startTm intValue]/30; i <= [endTm intValue]/30; i++) {
+                        lifeArea[i] = 1;
+                        NSLog(@"seized work area is :%d",i);
+                    }
+                }else{
+                    NSLog(@"事件类型有误！");
+                }
+               
+            }
+            
+        }
+        
+            sqlite3_finalize(statement);
       
     }
+    
+    
     else {
         NSLog(@"数据库打开失败");
         
     }
       sqlite3_close(dataBase);
 
-    
-    // 插入当天的数据
- 
-    
-   /* if (sqlite3_open(dbpath, &dataBase)==SQLITE_OK) {
-        
-        
-        NSString *insertSql = [NSString stringWithFormat:@"INSERT INTO DAYTABLE(DATE,mood,growth) VALUES(?,?,?)"];
-        
-        //    NSString *insertSql = [NSString stringWithFormat:@"INSERT INTO DAYTABLE(DATE) VALUES(\"%@\",\"%d\")",today,9];
-        const char *insertsatement = [insertSql UTF8String];
-        sqlite3_prepare_v2(dataBase, insertsatement, -1, &statement, NULL);
-        sqlite3_bind_text(statement, 1, [modifyDate UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_int(statement, 2, 0);
-        sqlite3_bind_int(statement, 3, 0);
-        
-        
-        if (sqlite3_step(statement)==SQLITE_DONE) {
-            NSLog(@"innsert today ok");
-        }
-        else {
-            NSLog(@"Error:%s",sqlite3_errmsg(dataBase));
-        }
-        sqlite3_finalize(statement);
-    }
-    else {
-        NSLog(@"数据库打开失败");
-        
-    }
-    
-    sqlite3_close(dataBase);
-    
-    */
-
-    
-    
+     
 }
 
 -(void)starTapped:(UIButton*)sender
@@ -281,7 +293,7 @@
    editingViewController *my_editingViewController = [[editingViewController alloc] initWithNibName:@"editingView" bundle:nil];
     my_editingViewController.eventType = [NSNumber numberWithInt:sender.tag];
     NSLog(@"type is:%@",my_editingViewController.eventType);
-    my_editingViewController.delegate = self.my_scoller;
+    my_editingViewController.drawBtnDelegate = self.my_scoller;
 
     
     my_editingViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
@@ -301,14 +313,94 @@
 
 #pragma mark modify delegation
 
--(void)modifyEvent
+-(void)modifyEvent:(NSNumber *)startArea;
 {
+    NSString *title_mdfy;
+    NSString *mainTxt_mdfy;
+    NSNumber *evtType_mdfy;
+    NSString *startTime;
+    NSString *endTime;
+    
+    NSLog(@"button tag is -----%@",startArea);
+    
+    
+    
+    sqlite3_stmt *statement;
+    const char *dbpath = [databasePath UTF8String];
+    if (sqlite3_open(dbpath, &dataBase)==SQLITE_OK) {
+        NSString *queryEvent = [NSString stringWithFormat:@"SELECT type,title,mainText,startTime,endTime from event where DATE=\"%@\" and startArea=\"%d\"",modifyDate,[startArea intValue]];
+        const char *queryEventstatment = [queryEvent UTF8String];
+        if (sqlite3_prepare_v2(dataBase, queryEventstatment, -1, &statement, NULL)==SQLITE_OK) {
+            if (sqlite3_step(statement)==SQLITE_ROW) {
+                //找到要修改的事件，取出数据。
+                
+    
+                evtType_mdfy = [[NSNumber alloc] initWithInt:sqlite3_column_int(statement, 0)];
+                char *ttl_mdfy = (char *)sqlite3_column_text(statement, 1);
+                NSLog(@"char_mdfy is %s",ttl_mdfy);
+                if (ttl_mdfy == nil) {
+                    title_mdfy = @"";
+                }else {
+                    title_mdfy = [[NSString alloc] initWithUTF8String:ttl_mdfy];
+                    NSLog(@"nsstring_mdfy  is %@",title_mdfy);
+                }
+                
+                char *mTxt_mdfy = (char *)sqlite3_column_text(statement, 2);
+                NSLog(@"mainTxt_mdfy is %s",mTxt_mdfy);
+                if (mTxt_mdfy == nil) {
+                    mainTxt_mdfy = @"";
+                }else {
+                    mainTxt_mdfy = [[NSString alloc] initWithUTF8String:mTxt_mdfy];
+                    NSLog(@"nsstring_mdfy  is %@",mainTxt_mdfy);
+                }
+                
+                NSNumber *startTm = [[NSNumber alloc] initWithDouble:sqlite3_column_double(statement,3)];
+                int start = [startTm intValue]+360;
+                NSNumber *endTm = [[NSNumber alloc] initWithDouble:sqlite3_column_double(statement,4)];
+                int end = [endTm intValue]+360;
+                if (start%60<10) {
+                    startTime = [NSString stringWithFormat:@"%d:0%d",start/60,start%60];
+
+                }else{
+                    startTime = [NSString stringWithFormat:@"%d:%d",start/60,start%60];
+                }
+                if (end%60<10) {
+                    endTime = [NSString stringWithFormat:@"%d:0%d",end/60,end%60];
+                    
+                }else{
+                    endTime = [NSString stringWithFormat:@"%d:%d",end/60,end%60];
+                }
+
+                
+                NSLog(@"start time is:%@",startTime);
+                
+                
+            }
+            
+        }
+        sqlite3_finalize(statement);
+    }
+    else {
+        NSLog(@"数据库打开失败");
+        
+    }
+    sqlite3_close(dataBase);
     editingViewController *my_modifyViewController = [[editingViewController alloc] initWithNibName:@"editingView" bundle:nil];
-    my_modifyViewController.delegate = self.my_scoller;
+    my_modifyViewController.drawBtnDelegate = self.my_scoller;
+    
+    //将该事件还原现使出来
+    my_modifyViewController.eventType = evtType_mdfy;
+    [(UITextField*)[my_modifyViewController.view viewWithTag:105] setText:title_mdfy] ;
+    [(UITextView*)[my_modifyViewController.view viewWithTag:106] setText:mainTxt_mdfy];
+    [(UILabel*)[my_modifyViewController.view viewWithTag:103] setText:startTime];
+    [(UILabel*)[my_modifyViewController.view viewWithTag:104] setText:endTime];
+    [(UIButton*)[my_modifyViewController.view viewWithTag:101] setTitle:@"" forState:UIControlStateNormal];
+    [(UIButton*)[my_modifyViewController.view viewWithTag:102] setTitle:@"" forState:UIControlStateNormal];
     
     my_modifyViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    
+    NSLog(@"%@==========%@",evtType_mdfy,my_modifyViewController.eventType);
     [self presentViewController:my_modifyViewController animated:YES completion:Nil ];
+        
 
 }
 

@@ -103,13 +103,14 @@ int contentLongth;
  
     NSLog(@"in draw the typ is : %@",eventType);
     UIButton *eventButton;
-    if ([eventType intValue] == 1) {
+    if ([eventType intValue] == 0) {
          eventButton = [[UIButton alloc] initWithFrame:CGRectMake(40, start, self.frame.size.width/2-32, height)];
     }
-    else if ([eventType intValue] == 2) {
+    else if ([eventType intValue] == 1) {
         eventButton = [[UIButton alloc] initWithFrame:CGRectMake(self.frame.size.width/2+25, start, self.frame.size.width/2-32, height)];
     }
    
+    eventButton.tag =[eventType intValue]*1000 + [startNum intValue]/30;
     // 设置圆角半径
     eventButton.layer.masksToBounds = YES;
     eventButton.layer.cornerRadius = 1.0;
@@ -133,7 +134,7 @@ int contentLongth;
 {
     
 
-    [self.my_delegate modifyEvent];
+    [self.modifyEvent_delegate modifyEvent:[[NSNumber alloc] initWithInteger:sender.tag]];
     
     
     

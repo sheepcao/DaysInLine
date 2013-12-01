@@ -12,6 +12,6 @@
 @interface dayLineScoller : UIScrollView<redrawButtonDelegate>
 
 @property (nonatomic,strong) buttonInScroll *btnInScroll;
-@property (weak, nonatomic) NSObject <redrawButtonDelegate> *my_delegate;
+@property (weak, nonatomic) NSObject <redrawButtonDelegate> *modifyEvent_delegate;
 
 @end

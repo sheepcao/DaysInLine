@@ -9,6 +9,9 @@
 #ifndef DaysInLine_globalVars_h
 #define DaysInLine_globalVars_h
 
-int area[32] ;
+int workArea[32] ;
+int lifeArea[32] ;
+NSString *modifyDate;
+int modifying;
 
 #endif

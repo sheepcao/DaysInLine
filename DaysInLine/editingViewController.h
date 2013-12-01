@@ -7,13 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "sqlite3.h"
 #import "redrawButtonDelegate.h"
 
 
 @interface editingViewController : UIViewController {
-    NSNumber *eventType;
+    sqlite3 *dataBase;
+    NSString *databasePath;
     NSNumber *startTimeNum;
     NSNumber *endTimeNum;
+
     
 }
 @property (weak, nonatomic) IBOutlet UIButton *addTagButton;
@@ -28,12 +31,14 @@
 @property (weak, nonatomic) IBOutlet UIButton *startTimeButton;
 @property (weak, nonatomic) IBOutlet UIButton *endTimeButton;
 @property (weak, nonatomic) IBOutlet UIButton *returnButton;
+@property (weak, nonatomic) UILabel *startLabel;
+@property (weak, nonatomic) UILabel *endLabel;
 
 @property (weak, nonatomic) IBOutlet UITextView *mainText;
 @property (weak, nonatomic) IBOutlet UITextField *theme;
 @property (weak, nonatomic) IBOutlet NSNumber *eventType;
 
-@property (weak, nonatomic) NSObject <redrawButtonDelegate> *delegate;
+@property (weak, nonatomic) NSObject <redrawButtonDelegate> *drawBtnDelegate;
 - (IBAction)endEditing:(id)sender;
 
 @end

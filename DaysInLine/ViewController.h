@@ -17,6 +17,7 @@
 {
     sqlite3 *dataBase;
     NSString *databasePath;
-    NSString *modifyDate;
+   
 }
+@property (weak, nonatomic) NSObject <redrawButtonDelegate> *drawBtnDelegate;
 @end
